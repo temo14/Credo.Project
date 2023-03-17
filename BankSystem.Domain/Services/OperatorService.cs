@@ -1,7 +1,6 @@
-﻿using BankSystem.DataAccess.Models.Request;
+﻿using BankSystem.DataAccess.Repositories.Contracts;
 using BankSystem.Domain.Services.Contracts;
-using DataAccess.Models;
-using DataAccess.Repositories.Contracts;
+using BankSystem.Shared.Models.Request;
 
 namespace BankSystem.Domain.Services;
 public class OperatorService : IOperatorService
@@ -12,19 +11,16 @@ public class OperatorService : IOperatorService
     {
         _repository=repository;
     }
-    public async Task<int> Login(LoginRequest request)
-    {
-        return await _repository.Login(request);
-    }
-    public Task AddUser(User user)
+
+    public Task AddUser(CreateUser user)
     {
         return _repository.InsertUser(user);
     }
-    public Task AddAccount(Account acc)
+    public Task AddAccount(CreateAccount acc)
     {
         return _repository.InsertAccount(acc);
     }
-    public Task AddCreditCard(CreditCard card)
+    public Task AddCreditCard(CreateCreditCard card)
     {
         return _repository.InsertCreditCard(card);
     }

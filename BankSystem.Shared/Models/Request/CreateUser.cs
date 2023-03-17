@@ -1,6 +1,5 @@
-﻿namespace DataAccess.Models;
-
-public class User
+﻿namespace BankSystem.Shared.Models.Request;
+public class CreateUser
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }

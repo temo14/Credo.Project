@@ -1,11 +1,9 @@
-﻿using BankSystem.DataAccess.Models.Request;
-using DataAccess.Models;
+﻿using BankSystem.Shared.Models.Request;
 
-namespace DataAccess.Repositories.Contracts;
+namespace BankSystem.DataAccess.Repositories.Contracts;
 public interface IOperatorRepository
 {
-    Task InsertAccount(Account account);
-    Task InsertCreditCard(CreditCard creditCard);
-    Task InsertUser(User user);
-    Task<int> Login(LoginRequest request);
+    Task InsertAccount(CreateAccount account);
+    Task InsertCreditCard(CreateCreditCard creditCard);
+    Task InsertUser(CreateUser user);
 }

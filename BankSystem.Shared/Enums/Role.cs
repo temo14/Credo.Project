@@ -1,4 +1,4 @@
-﻿namespace DataAccess.Enum;
+﻿namespace BankSystem.Shared.Enums;
 
 public enum Roles
 {

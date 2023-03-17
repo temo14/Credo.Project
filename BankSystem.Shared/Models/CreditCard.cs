@@ -1,4 +1,4 @@
-﻿namespace DataAccess.Models;
+﻿namespace BankSystem.Shared.Models;
 public class CreditCard
 {
     public int UserId { get; set; }

@@ -1,6 +1,6 @@
-﻿using DataAccess.Enum;
+﻿using BankSystem.Shared.Enums;
 
-namespace DataAccess.Models;
+namespace BankSystem.Shared.Models;
 public class Account
 {
     public int UserId { get; set; }

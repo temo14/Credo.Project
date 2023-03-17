@@ -1,5 +1,6 @@
-﻿using BankSystem.DataAccess.Models.Request;
-using BankSystem.Domain.Services.Contracts;
+﻿using BankSystem.Domain.Services.Contracts;
+using BankSystem.Shared.Models.Request;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MinimalAPIDemo;
 
@@ -20,8 +21,8 @@ public static class Api
     }
     //#region OperatorApi
 
-    //[Authorize(Roles = "Operator")]
-    private static async Task<IResult> InsertUser(User user, IOperatorService data)
+    [Authorize(Roles = "Operator")]
+    private static async Task<IResult> InsertUser(CreateUser user, IOperatorService data)
     {
         try
         {
@@ -35,7 +36,7 @@ public static class Api
     }
 
     //[Authorize(Roles = "Operator")]
-    private static async Task<IResult> InsertAccount(Account acc, IOperatorService data)
+    private static async Task<IResult> InsertAccount(CreateAccount acc, IOperatorService data)
     {
         try
         {
@@ -49,7 +50,7 @@ public static class Api
     }
 
     //[Authorize(Roles = "Operator")]
-    private static async Task<IResult> InsertCreditCard(CreditCard acc, IOperatorService data)
+    private static async Task<IResult> InsertCreditCard(CreateCreditCard acc, IOperatorService data)
     {
         try
         {
@@ -67,12 +68,12 @@ public static class Api
 
     //#endregion
 
-    private static async Task<IResult> Login(LoginRequest request, IOperatorService data)
+    private static async Task<IResult> Login(LoginRequest request, IAccountService data)
     {
         try
         {
             var result = await data.Login(request);
-            return Results.Ok(result);
+            return Results.Ok(result.Value);
         }
         catch (Exception ex)
         {

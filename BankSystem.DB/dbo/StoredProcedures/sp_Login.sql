@@ -3,14 +3,16 @@
 	@Password varchar(30)
 AS
 begin
-	declare @UserID int = (
-		select Id from Users where Username = @Username and Password = hashbytes('SHA2_256', @Password)
-	);
+	declare @Roles nvarchar(100), @UserId int;
+
+	select @UserId = Id, @Roles = Roles
+	from Users
+	where Username = @Username and Password = HASHBYTES('SHA2_256', @Password);
 
 	if @UserId is not null
 	begin
-		return 0;
+		select cast(1 as bit) as LoginStatus, @UserId as UserId, @Roles as Roles;
 	end
 
-	return -1;
+	select cast(0 as bit) as LoginStatus, @UserId as UserId, @Roles as Roles;
 end

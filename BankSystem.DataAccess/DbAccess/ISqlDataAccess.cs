@@ -1,5 +1,5 @@
 ﻿
-namespace DataAccess.DbAccess;
+namespace BankSystem.DataAccess.DbAccess;
 
 public interface ISqlDataAccess
 {

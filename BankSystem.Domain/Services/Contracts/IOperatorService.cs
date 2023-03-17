@@ -1,11 +1,9 @@
-﻿using BankSystem.DataAccess.Models.Request;
-using DataAccess.Models;
+﻿using BankSystem.Shared.Models.Request;
 
 namespace BankSystem.Domain.Services.Contracts;
 public interface IOperatorService
 {
-    Task AddAccount(Account acc);
-    Task AddCreditCard(CreditCard card);
-    Task AddUser(User user);
-    Task<int> Login(LoginRequest request);
+    Task AddAccount(CreateAccount acc);
+    Task AddCreditCard(CreateCreditCard card);
+    Task AddUser(CreateUser user);
 }

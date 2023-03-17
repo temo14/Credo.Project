@@ -1,9 +1,9 @@
-﻿using BankSystem.DataAccess.Models.Request;
-using DataAccess.DbAccess;
-using DataAccess.Models;
-using DataAccess.Repositories.Contracts;
+﻿using BankSystem.DataAccess.DbAccess;
+using BankSystem.DataAccess.Repositories.Contracts;
+using BankSystem.Shared.Models;
+using BankSystem.Shared.Models.Request;
 
-namespace DataAccess.Data;
+namespace BankSystem.DataAccess.Data;
 
 public class OperatorRepository : IOperatorRepository
 {
@@ -13,26 +13,20 @@ public class OperatorRepository : IOperatorRepository
     {
         _db = db;
     }
-    public Task InsertUser(User user) =>
+    public Task InsertUser(CreateUser user) =>
         _db.SaveData(
             "dbo.spUser_Insert",
             new { user.FirstName, user.LastName, user.Username, user.IdNumber, user.Roles, user.BirthDate, user.Password });
 
-    public Task InsertAccount(Account account) =>
+    public Task InsertAccount(CreateAccount account) =>
         _db.SaveData(
             "dbo.spAccount_Insert",
             new { account.Amount, account.Currency, account.Iban, account.UserId });
 
-    public Task InsertCreditCard(CreditCard creditCard) =>
+    public Task InsertCreditCard(CreateCreditCard creditCard) =>
         _db.SaveData(
             "dbo.spCreditCard_Insert",
             new { creditCard.UserId, creditCard.AccountId, creditCard.CardNumber, creditCard.Cvv, creditCard.Pin });
-
-    public async Task<int> Login(LoginRequest request)
-    {
-        var result = await _db.LoadData<int, dynamic>("dbo.sp_Login", new { request.UserName, request.Password });
-        return result.FirstOrDefault();
-    }
 
     public Task<IEnumerable<User>> GetUsers() =>
     _db.LoadData<User, dynamic>("dbo.spUser_GetAll", new { });
