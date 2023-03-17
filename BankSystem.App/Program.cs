@@ -1,31 +1,32 @@
-using BankSystem.App.Data;
-using Microsoft.AspNetCore.Components;
+using BankSystem.App;
+using BankSystem.App.Auth;
+using BankSystem.App.Repository;
+using BankSystem.App.Repository.Contracts;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
+builder.RootComponents.Add<App>("#app");
+builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// Add services to the container.
-builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7145/") });
 
-var app = builder.Build();
+// use same instance for AuthenticationStateProvider and ILoginService
+builder.Services.AddScoped<JWTAuthenticationStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider, JWTAuthenticationStateProvider>(
+    provider => provider.GetRequiredService<JWTAuthenticationStateProvider>()
+    );
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+builder.Services.AddScoped<ILoginService, JWTAuthenticationStateProvider>(
+    provider => provider.GetRequiredService<JWTAuthenticationStateProvider>()
+    );
 
-app.UseHttpsRedirection();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 
-app.UseStaticFiles();
 
-app.UseRouting();
+builder.Services.AddAuthorizationCore();
 
-app.MapBlazorHub();
-app.MapFallbackToPage("/_Host");
+//LocalStorage.GetToken = () => "";
 
-app.Run();
+await builder.Build().RunAsync();

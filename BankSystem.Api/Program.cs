@@ -1,26 +1,33 @@
 using BankSystem.Domain.Configurations;
+using Microsoft.Net.Http.Headers;
 using MinimalAPIDemo;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors();
 
 ServiceExtension.Configure(builder);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+app.UseCors(policy =>
+    policy.WithOrigins("http://localhost:5047", "http://localhost:5047")
+    .AllowAnyMethod()
+    .WithHeaders(HeaderNames.ContentType)
+);
 app.UseHttpsRedirection();
 
 app.ConfigureApi();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();

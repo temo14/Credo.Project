@@ -9,7 +9,7 @@ public static class Api
     public static void ConfigureApi(this WebApplication app)
     {
         //User
-        app.MapPost("/Login", Login);
+        app.MapPost("/auth", Login);
         //app.MapGet("/Users/{id}", GetUser);
         app.MapPost("/Users", InsertUser);
         app.MapPost("/Account", InsertAccount);
