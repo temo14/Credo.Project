@@ -1,4 +1,4 @@
-﻿namespace BankSystem.Shared.Models.Request;
+﻿namespace BankSystem.Shared.Models;
 public class LoginRequest
 {
     public string UserName { get; set; }

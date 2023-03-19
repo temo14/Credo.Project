@@ -1,0 +1,81 @@
+﻿@page "/register/user"
+
+@inject IAccountRepository accountsRepository
+@inject NavigationManager navigationManager
+
+<h3>Add User</h3>
+
+<EditForm Model="user" OnValidSubmit="CreateUser">
+    <DataAnnotationsValidator />
+
+    <div class="form-group">
+        <label>FirstName:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@user.FirstName" />
+            <ValidationMessage For="@(() => user.FirstName)" />
+        </div>
+    </div>  
+    
+    <div class="form-group">
+        <label>LastName:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@user.LastName" />
+            <ValidationMessage For="@(() => user.LastName)" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label>Username:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@user.Username" />
+            <ValidationMessage For="@(() => user.Username)" />
+        </div>
+    </div>   
+    
+    <div class="form-group">
+        <label>Password:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@user.Password" />
+            <ValidationMessage For="@(() => user.Password)" />
+        </div>
+    </div> 
+    
+    <div class="form-group">
+        <label>IdNumber:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@user.IdNumber" />
+            <ValidationMessage For="@(() => user.IdNumber)" />
+        </div>
+    </div>  
+    
+    <div class="form-group">
+        <label>Roles:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@user.Roles" />
+            <ValidationMessage For="@(() => user.Roles)" />
+        </div>
+    </div> 
+    
+    <div class="form-group">
+        <label>BirthDate:</label>
+        <div>
+            <InputDate class="form-control" @bind-Value="@user.BirthDate" />
+            <ValidationMessage For="@(() => user.BirthDate)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add User</button>
+
+</EditForm>
+
+@code {
+    private UserDto user = new UserDto();
+
+    private async Task CreateUser()
+    {
+        var userToken = await accountsRepository.AddUser(user);
+        user = new();
+        //await loginService.Login(userToken);
+        navigationManager.NavigateTo("register");
+    }
+}

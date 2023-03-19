@@ -1,4 +1,6 @@
-﻿@page "/Login"
+﻿@page "/login"
+@using BankSystem.Shared.Enums;
+@using System.Security.Claims;
 
 @inject IAccountRepository accountsRepository
 @inject NavigationManager navigationManager
@@ -6,7 +8,7 @@
 
 <h3>Login</h3>
 
-<EditForm Model="userInfo" OnValidSubmit="CreateUser">
+<EditForm Model="userInfo" OnValidSubmit="Signin">
     <DataAnnotationsValidator />
 
     <div class="form-group">
@@ -24,18 +26,38 @@
             <ValidationMessage For="@(() => userInfo.Password)" />
         </div>
     </div>
-
     <button type="submit" class="btn btn-primary">Login</button>
 
 </EditForm>
 
 @code {
     private LoginRequest userInfo = new LoginRequest();
+    private int userId;
 
-    private async Task CreateUser()
+    private async Task Signin()
     {
         var userToken = await accountsRepository.Login(userInfo);
         await loginService.Login(userToken);
-        navigationManager.NavigateTo("");
+
+        //await InitializeUserAsync();
     }
+
+    //private async Task InitializeUserAsync()
+    //{
+    //    var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+    //    var Id = authState.User.Claims.SingleOrDefault(x => x.Type == "Id");
+    //    var role = authState.User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.Role);
+
+    //    userId = Convert.ToInt32(Id!.Value ?? throw new ArgumentNullException());
+
+    //    if (role.ToString() == Roles.User.ToString())
+    //    {
+    //        navigationManager.NavigateTo($"user/{userId}");
+    //    }
+    //    else
+    //    {
+    //        navigationManager.NavigateTo($"operator");
+    //    }
+    //}
+
 }

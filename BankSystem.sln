@@ -22,7 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{B3F66671-0
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankSystem.Shared", "BankSystem.Shared\BankSystem.Shared.csproj", "{7E193518-F3D8-4439-801B-322CDB0A3C80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankSystem.App", "BankSystem.App\BankSystem.App.csproj", "{D2502931-E687-4A10-BCA3-C3EB42FD08B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankSystem.App", "BankSystem.App\BankSystem.App.csproj", "{D2502931-E687-4A10-BCA3-C3EB42FD08B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

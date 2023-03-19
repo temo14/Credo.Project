@@ -1,0 +1,57 @@
+﻿@page "/register/account"
+
+@inject IAccountRepository accountsRepository
+@inject NavigationManager navigationManager
+
+<h3>Add Account</h3>
+
+<EditForm Model="account" OnValidSubmit="CreateUser">
+    <DataAnnotationsValidator />
+    
+    <div class="form-group">
+        <label>UserId:</label>
+        <div>
+            <InputNumber class="form-control" @bind-Value="@account.UserId" />
+            <ValidationMessage For="@(() => account.UserId)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Amount:</label>
+        <div>
+            <InputNumber class="form-control" @bind-Value="@account.Amount" />
+            <ValidationMessage For="@(() => account.Amount)" />
+        </div>
+    </div>  
+    
+    <div class="form-group">
+        <label>Iban:</label>
+        <div>
+            <InputNumber class="form-control" @bind-Value="@account.Iban" />
+            <ValidationMessage For="@(() => account.Iban)" />
+        </div>
+    </div>   
+    
+    <div class="form-group">
+        <label>Currency:</label>
+        <div>
+            <InputNumber class="form-control" @bind-Value="@account.Currency" />
+            <ValidationMessage For="@(() => account.Currency)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add User</button>
+
+</EditForm>
+
+@code {
+    private AccountDto account = new AccountDto();
+
+    private async Task CreateUser()
+    {
+        var userToken = await accountsRepository.AddAccount(account);
+        account = new();
+        //await loginService.Login(userToken);
+        navigationManager.NavigateTo("register");
+    }
+}

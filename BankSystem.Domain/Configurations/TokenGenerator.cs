@@ -19,7 +19,7 @@ public class TokenGenerator
     {
         var claims = new List<Claim>
         {
-            new Claim(JwtRegisteredClaimNames.Sub, data.UserId.ToString()),
+            new Claim("Id", data.UserId.ToString()),
             new Claim(ClaimTypes.Role, data.Roles),
             new Claim(ClaimTypes.Name, data.FirstName)
         };

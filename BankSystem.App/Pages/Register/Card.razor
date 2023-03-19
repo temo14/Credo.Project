@@ -1,0 +1,65 @@
+﻿@page "/register/card"
+
+@inject IAccountRepository accountsRepository
+@inject NavigationManager navigationManager
+
+<h3>Add Card</h3>
+
+<EditForm Model="creditCard" OnValidSubmit="CreateCard">
+    <DataAnnotationsValidator />
+
+    <div class="form-group">
+        <label>UserId:</label>
+        <div>
+            <InputNumber  class="form-control" @bind-Value="@creditCard.UserId" />
+            <ValidationMessage For="@(() => creditCard.UserId)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>AccountId:</label>
+        <div>
+            <InputNumber class="form-control" @bind-Value="@creditCard.AccountId" />
+            <ValidationMessage For="@(() => creditCard.AccountId)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>CardNumber:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@creditCard.CardNumber" />
+            <ValidationMessage For="@(() => creditCard.CardNumber)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Cvv:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@creditCard.Cvv" />
+            <ValidationMessage For="@(() => creditCard.Cvv)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Pin:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@creditCard.Pin" />
+            <ValidationMessage For="@(() => creditCard.Pin)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add CreateCard</button>
+
+</EditForm>
+
+@code {
+    private CreditCardDto creditCard = new CreditCardDto();
+
+    private async Task CreateCard()
+    {
+        var userToken = await accountsRepository.AddCard(creditCard);
+        creditCard = new();
+        //await loginService.Login(userToken);
+        navigationManager.NavigateTo("register");
+    }
+}

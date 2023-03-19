@@ -21,7 +21,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors(policy =>
     policy.WithOrigins("http://localhost:5047", "http://localhost:5047")
     .AllowAnyMethod()
-    .WithHeaders(HeaderNames.ContentType)
+    .AllowAnyHeader()
 );
 app.UseHttpsRedirection();
 

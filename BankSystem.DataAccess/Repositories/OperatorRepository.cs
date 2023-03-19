@@ -13,17 +13,17 @@ public class OperatorRepository : IOperatorRepository
     {
         _db = db;
     }
-    public Task InsertUser(CreateUser user) =>
+    public Task InsertUser(UserDto user) =>
         _db.SaveData(
             "dbo.spUser_Insert",
             new { user.FirstName, user.LastName, user.Username, user.IdNumber, user.Roles, user.BirthDate, user.Password });
 
-    public Task InsertAccount(CreateAccount account) =>
+    public Task InsertAccount(AccountDto account) =>
         _db.SaveData(
             "dbo.spAccount_Insert",
             new { account.Amount, account.Currency, account.Iban, account.UserId });
 
-    public Task InsertCreditCard(CreateCreditCard creditCard) =>
+    public Task InsertCreditCard(CreditCardDto creditCard) =>
         _db.SaveData(
             "dbo.spCreditCard_Insert",
             new { creditCard.UserId, creditCard.AccountId, creditCard.CardNumber, creditCard.Cvv, creditCard.Pin });

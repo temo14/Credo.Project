@@ -1,6 +1,9 @@
 ﻿using BankSystem.Domain.Services.Contracts;
+using BankSystem.Shared.Models;
 using BankSystem.Shared.Models.Request;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MinimalAPIDemo;
 
@@ -10,19 +13,19 @@ public static class Api
     {
         //User
         app.MapPost("/auth", Login);
-        //app.MapGet("/Users/{id}", GetUser);
-        app.MapPost("/Users", InsertUser);
-        app.MapPost("/Account", InsertAccount);
-        app.MapPost("/CreditCard", InsertCreditCard);
+        app.MapGet("/user/{id:int}", GetUserAccounts);
+        app.MapPost("/users", InsertUser);
+        app.MapPost("/account", InsertAccount);
+        app.MapPost("/creditcard", InsertCreditCard);
         //app.MapPut("/Users", UpdateUser);
         //app.MapDelete("/Users", DeleteUser);
         //Account
 
     }
-    //#region OperatorApi
+    #region OperatorApi
 
     [Authorize(Roles = "Operator")]
-    private static async Task<IResult> InsertUser(CreateUser user, IOperatorService data)
+    private static async Task<IResult> InsertUser(UserDto user, IOperatorService data)
     {
         try
         {
@@ -35,8 +38,8 @@ public static class Api
         }
     }
 
-    //[Authorize(Roles = "Operator")]
-    private static async Task<IResult> InsertAccount(CreateAccount acc, IOperatorService data)
+    [Authorize(Roles = "Operator")]
+    private static async Task<IResult> InsertAccount(AccountDto acc, IOperatorService data)
     {
         try
         {
@@ -49,8 +52,8 @@ public static class Api
         }
     }
 
-    //[Authorize(Roles = "Operator")]
-    private static async Task<IResult> InsertCreditCard(CreateCreditCard acc, IOperatorService data)
+    [Authorize(Roles = "Operator")]
+    private static async Task<IResult> InsertCreditCard(CreditCardDto acc, IOperatorService data)
     {
         try
         {
@@ -62,11 +65,22 @@ public static class Api
             return Results.Problem(ex.Message);
         }
     }
-    //#endregion
+    #endregion
 
-    //#region UserApi
-
-    //#endregion
+    #region UserApi
+    [Authorize(Roles = "User")]
+    private static async Task<IResult> GetUserAccounts(int id, IAccountService service)
+    {
+        try
+        {
+            return Results.Ok(await service.GetUserAccoutns(id));
+        }
+        catch (Exception ex)
+        {
+            return Results.Problem(ex.Message);
+        }
+    }
+    #endregion
 
     private static async Task<IResult> Login(LoginRequest request, IAccountService data)
     {

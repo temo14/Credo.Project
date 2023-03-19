@@ -3,7 +3,7 @@
 namespace BankSystem.Domain.Services.Contracts;
 public interface IOperatorService
 {
-    Task AddAccount(CreateAccount acc);
-    Task AddCreditCard(CreateCreditCard card);
-    Task AddUser(CreateUser user);
+    Task AddAccount(AccountDto acc);
+    Task AddCreditCard(CreditCardDto card);
+    Task AddUser(UserDto user);
 }

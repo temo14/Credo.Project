@@ -1,6 +1,7 @@
 ﻿using BankSystem.DataAccess.Repositories.Contracts;
 using BankSystem.Domain.Configurations;
 using BankSystem.Domain.Services.Contracts;
+using BankSystem.Shared.Models;
 using BankSystem.Shared.Models.Request;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,5 +25,9 @@ public class AccountService : IAccountService
         }
 
         return new ActionResult<string>(string.Empty);
+    }
+    public async Task<IEnumerable<AccountDto>> GetUserAccoutns(int id)
+    {
+        return await _repository.GetAccounts(id);
     }
 }

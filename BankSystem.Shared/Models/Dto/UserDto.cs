@@ -1,5 +1,5 @@
 ﻿namespace BankSystem.Shared.Models.Request;
-public class CreateUser
+public class UserDto
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }

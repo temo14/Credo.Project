@@ -12,15 +12,15 @@ public class OperatorService : IOperatorService
         _repository=repository;
     }
 
-    public Task AddUser(CreateUser user)
+    public Task AddUser(UserDto user)
     {
         return _repository.InsertUser(user);
     }
-    public Task AddAccount(CreateAccount acc)
+    public Task AddAccount(AccountDto acc)
     {
         return _repository.InsertAccount(acc);
     }
-    public Task AddCreditCard(CreateCreditCard card)
+    public Task AddCreditCard(CreditCardDto card)
     {
         return _repository.InsertCreditCard(card);
     }

@@ -1,4 +1,4 @@
 ﻿namespace BankSystem.Shared.Models.Request;
-public class TransactionRequest
+public class TransactionDto
 {
 }

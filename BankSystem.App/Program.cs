@@ -10,7 +10,7 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7145/") });
+builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7145/") });
 
 // use same instance for AuthenticationStateProvider and ILoginService
 builder.Services.AddScoped<JWTAuthenticationStateProvider>();
@@ -23,6 +23,7 @@ builder.Services.AddScoped<ILoginService, JWTAuthenticationStateProvider>(
     );
 
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 
 builder.Services.AddAuthorizationCore();

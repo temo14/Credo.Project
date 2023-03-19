@@ -3,7 +3,7 @@
 namespace BankSystem.DataAccess.Repositories.Contracts;
 public interface IOperatorRepository
 {
-    Task InsertAccount(CreateAccount account);
-    Task InsertCreditCard(CreateCreditCard creditCard);
-    Task InsertUser(CreateUser user);
+    Task InsertAccount(AccountDto account);
+    Task InsertCreditCard(CreditCardDto creditCard);
+    Task InsertUser(UserDto user);
 }
