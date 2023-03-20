@@ -1,8 +1,16 @@
 ﻿CREATE PROCEDURE [dbo].[sp_GetAccounts]
-	@userId int
+	@userId int = null
 AS
 begin
-	select Id, Amount, Iban, Currency
-	from Accounts
-	where UserID = @userId
+	if @userId is null
+	begin
+		select Id, Amount, Iban, Currency
+		from Accounts
+	end
+	else
+	begin
+		select Id, Amount, Iban, Currency
+		from Accounts
+		where UserID = @userId
+	end
 end
