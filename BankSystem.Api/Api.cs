@@ -13,7 +13,9 @@ public static class Api
     {
         //User
         app.MapPost("/auth", Login);
-        app.MapGet("/user/{id:int}", GetUserAccounts);
+        app.MapGet("/user/{userId:int}", GetAccounts);
+        app.MapGet("/accounts", GetAllAccounts);
+        app.MapGet("/account/{accountId:int}", GetAccountCreditCard);
         app.MapPost("/users", InsertUser);
         app.MapPost("/account", InsertAccount);
         app.MapPost("/creditcard", InsertCreditCard);
@@ -69,30 +71,53 @@ public static class Api
 
     #region UserApi
     [Authorize(Roles = "User")]
-    private static async Task<IResult> GetUserAccounts(int id, IAccountService service)
+    private static async Task<IResult> GetAccounts(int userId, IAccountService service)
     {
         try
         {
-            return Results.Ok(await service.GetUserAccoutns(id));
+            return Results.Ok(await service.GetAccoutns(userId));
         }
         catch (Exception ex)
         {
             return Results.Problem(ex.Message);
         }
     }
+    [Authorize(Roles = "User")]
+    private static async Task<IResult> GetAllAccounts(IAccountService service)
+    {
+        try
+        {
+            return Results.Ok(await service.GetAllAccoutns());
+        }
+        catch (Exception ex)
+        {
+            return Results.Problem(ex.Message);
+        }
+    }
+    [Authorize(Roles = "User")]
+    private static async Task<IResult> GetAccountCreditCard(int accountId, IAccountService service)
+    {
+        try
+        {
+            return Results.Ok(await service.GetCreditCards(accountId));
+        }
+        catch (Exception ex)
+        {
+            return Results.Problem(ex.Message);
+        }
+    }
+
     #endregion
 
     private static async Task<IResult> Login(LoginRequest request, IAccountService data)
     {
         try
         {
-            var result = await data.Login(request);
-            return Results.Ok(result.Value);
+            return Results.Ok(await data.Login(request));
         }
         catch (Exception ex)
         {
             return Results.Problem(ex.Message);
         }
     }
-
 }

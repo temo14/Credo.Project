@@ -1,4 +1,5 @@
 ﻿
+using BankSystem.App.Pages.Register;
 using BankSystem.App.Repository.Contracts;
 using BankSystem.Shared.Models;
 using BankSystem.Shared.Models.Request;
@@ -42,7 +43,7 @@ public class AccountRepository : IAccountRepository
             //Log exception
             throw;
         }
-    }     
+    }
     public async Task<string?> AddUser(UserDto request)
     {
         try
@@ -114,6 +115,29 @@ public class AccountRepository : IAccountRepository
         }
         catch (Exception ex)
         {
+            //Log exception
+            throw;
+        }
+    }
+    public async Task<IEnumerable<AccountDto>> GetAllAccaount()
+    {
+        try
+        {
+            var response = await httpClient.GetAsync($"/accounts");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<IEnumerable<AccountDto>>();
+            }
+            else
+            {
+                var message = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Http status code: {response.StatusCode} message: {message}");
+            }
+        }
+        catch (Exception ex)
+        {
+            var r = ex.Message;
             //Log exception
             throw;
         }

@@ -3,6 +3,7 @@ using BankSystem.Domain.Configurations;
 using BankSystem.Domain.Services.Contracts;
 using BankSystem.Shared.Models;
 using BankSystem.Shared.Models.Request;
+using BankSystem.Shared.Models.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankSystem.Domain.Services;
@@ -16,18 +17,26 @@ public class AccountService : IAccountService
         _token = token;
     }
 
-    public async Task<ActionResult<string>> Login(LoginRequest request)
+    public async Task<string> Login(LoginRequest request)
     {
         var response = await _repository.Login(request);
         if (response.LoginStatus)
         {
-            return new ActionResult<string>(_token.Generate(response));
+            return _token.Generate(response);
         }
 
-        return new ActionResult<string>(string.Empty);
+        return string.Empty;
     }
-    public async Task<IEnumerable<AccountDto>> GetUserAccoutns(int id)
+    public async Task<IEnumerable<AccountDto>> GetAccoutns(int Id)
     {
-        return await _repository.GetAccounts(id);
+        return await _repository.GetAccounts(Id);
+    }
+    public async Task<IEnumerable<CreditCardDto>> GetCreditCards(int id)
+    {
+        return await _repository.GetCards(id);
+    }
+    public async Task<IEnumerable<TransferAccounts>> GetAllAccoutns()
+    {
+        return await _repository.GetAllAccounts();
     }
 }

@@ -1,0 +1,61 @@
+﻿@page "/account/{accountId:int}"
+@inject IUserRepository repository
+@inject NavigationManager nav
+
+@if (creditCards == null && ErrorMessage == null)
+{
+    <h3 class="text-danger">Loading ...</h3>
+}
+else if (ErrorMessage != null)
+{
+    <h3 class="text-danger">@ErrorMessage</h3>
+}
+else
+{
+    var accountsCount = creditCards!.Count();
+
+    @if (accountsCount > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Cvv</th>
+                    <th>Pin</th>
+                    <th>ExpireDate</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var card in creditCards!)
+            {
+                <tr>
+                    <th>@card.CardNumber</th>
+                    <th>@card.Cvv</th>
+                    <th>@card.Pin</th>
+                    <th>@card.CardExpireDate.ToString("dd MMM yyyy")</th>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h3 class="text-danger">There are no CreditCards to show</h3>
+    }
+
+    <button class="btn btn-primary" @onclick="@(() => nav.NavigateTo($"/transfer/{accountId}/true"))">Inner Transfer</button>
+
+    <button class="btn btn-primary" @onclick="@(() => nav.NavigateTo($"/transfer/{accountId}/false"))">Outer Transfer</button>
+}
+@code {
+    [Parameter] public int accountId { get; set; }
+
+    public IEnumerable<CreditCardDto> creditCards { get; set; }
+
+    public string ErrorMessage { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        creditCards = await repository.GetCreditCards(accountId);
+    }
+}

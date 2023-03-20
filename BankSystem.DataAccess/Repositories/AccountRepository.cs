@@ -27,4 +27,12 @@ public class AccountRepository : IAccountRepository
     {
         return await _db.LoadData<AccountDto, dynamic>("dbo.sp_GetAccounts", new { userId = Id });
     }
+    public async Task<IEnumerable<CreditCardDto>> GetCards(int Id)
+    {
+        return await _db.LoadData<CreditCardDto, dynamic>("dbo.sp_GetCreditCards", new { accountId = Id });
+    }
+    public async Task<IEnumerable<TransferAccounts>> GetAllAccounts()
+    {
+        return await _db.LoadData<TransferAccounts, dynamic>("dbo.sp_GetAllAccounts", new { });
+    }
 }

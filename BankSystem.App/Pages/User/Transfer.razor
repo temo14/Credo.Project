@@ -1,0 +1,39 @@
+﻿@page "/transfer/{accountId:int}/{inner}"
+@inject IUserRepository repository
+
+<BlazoredTypeahead SearchMethod="Search" @bind-Value="SelectedAccount">
+    <SelectedTemplate>
+        @context.Currency
+    </SelectedTemplate>
+    <ResultTemplate>
+        @context.Amount
+    </ResultTemplate>
+</BlazoredTypeahead>
+
+@if (SelectedAccount != null)
+{
+    <p>Selected Account: @SelectedAccount.Currency</p>
+}
+
+@code {
+
+    [Parameter] public int accountId { get; set; }
+    [Parameter] public string Inner { get; set; }
+
+    private bool isInner;
+
+    private IEnumerable<TransferAccounts> Accounts;
+    private TransferAccounts SelectedAccount;
+
+    protected override async Task OnInitializedAsync()
+    {
+        isInner = Convert.ToBoolean(Inner);
+
+        Accounts = await repository.GetAllAccounts();
+    }
+
+    private async Task<IEnumerable<TransferAccounts>> Search(string text)
+    {
+        return await Task.FromResult(Accounts.Where(x => x.AccountId.ToString() == text).ToList());
+    }
+}

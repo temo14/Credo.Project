@@ -72,8 +72,13 @@
     <Build Include="dbo\StoredProcedures\Operator\spCreditCard_Insert.sql" />
     <Build Include="dbo\StoredProcedures\sp_Login.sql" />
     <Build Include="dbo\StoredProcedures\User\sp_GetAccounts.sql" />
+    <Build Include="dbo\StoredProcedures\User\sp_GetCreditCards.sql" />
+    <Build Include="dbo\StoredProcedures\User\sp_GetAllAccounts.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BankSystem.DB.publish.xml" />
   </ItemGroup>
 </Project>
