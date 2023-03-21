@@ -6,7 +6,7 @@
 	TransferFee decimal(18, 2) not null,
 	TransferAmount decimal(18, 2) not null,
 	Currency nvarchar(3) not null,
-	TransactionType int not null,
+	TransactionType nvarchar(20) not null,
 	TransactionDate datetime not null default(GetDate()),
 	CreateDate datetime not null default(GetDate()),
 	IsDeleted bit not null default(0)

@@ -10,4 +10,5 @@ public interface IAccountService
     Task<IEnumerable<AccountDto>> GetAccoutns(int Id);
     public Task<string> Login(LoginRequest request);
     Task<IEnumerable<TransferAccounts>> GetAllAccoutns();
+    Task TransferMoney(TransferRequest request);
 }

@@ -8,5 +8,6 @@ public interface IAccountRepository
     Task<IEnumerable<AccountDto>> GetAccounts(int Id);
     Task<IEnumerable<TransferAccounts>> GetAllAccounts();
     Task<IEnumerable<CreditCardDto>> GetCards(int Id);
+    Task Transfer(TransactionDto request);
     Task<LoginResponse> Login(LoginRequest request);
 }

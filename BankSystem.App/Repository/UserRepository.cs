@@ -86,4 +86,29 @@ public class UserRepository : IUserRepository
             throw;
         }
     }
+    public async Task TransferMoney(TransferRequest request)
+    {
+        try
+        {
+            var jsonRequest = JsonConvert.SerializeObject(request);
+            var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
+
+            var response = await httpClient.PostAsync($"/user/transfer", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return;
+            }
+            else
+            {
+                var message = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Http status code: {response.StatusCode} message: {message}");
+            }
+        }
+        catch (Exception ex)
+        {
+            //Log exception
+            throw;
+        }
+    }
 }

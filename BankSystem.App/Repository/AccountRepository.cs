@@ -44,18 +44,18 @@ public class AccountRepository : IAccountRepository
             throw;
         }
     }
-    public async Task<string?> AddUser(UserDto request)
+    public async Task AddUser(UserDto request)
     {
         try
         {
             var jsonRequest = JsonConvert.SerializeObject(request);
             var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
 
-            var response = await httpClient.PostAsync($"/auth", content);
+            var response = await httpClient.PostAsync($"/users", content);
 
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadFromJsonAsync<string>();
+                return;
             }
             else
             {
@@ -69,18 +69,18 @@ public class AccountRepository : IAccountRepository
             throw;
         }
     }
-    public async Task<string?> AddCard(CreditCardDto request)
+    public async Task AddCard(CreditCardDto request)
     {
         try
         {
             var jsonRequest = JsonConvert.SerializeObject(request);
             var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
 
-            var response = await httpClient.PostAsync($"/auth", content);
+            var response = await httpClient.PostAsync($"/creditcard", content);
 
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadFromJsonAsync<string>();
+                return;
             }
             else
             {
@@ -94,18 +94,18 @@ public class AccountRepository : IAccountRepository
             throw;
         }
     }
-    public async Task<string?> AddAccount(AccountDto request)
+    public async Task AddAccount(AccountDto request)
     {
         try
         {
             var jsonRequest = JsonConvert.SerializeObject(request);
             var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
 
-            var response = await httpClient.PostAsync($"/auth", content);
+            var response = await httpClient.PostAsync($"/account", content);
 
             if (response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadFromJsonAsync<string>();
+                return;
             }
             else
             {

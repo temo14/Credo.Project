@@ -57,9 +57,8 @@
 
     private async Task CreateCard()
     {
-        var userToken = await accountsRepository.AddCard(creditCard);
-        creditCard = new();
+        await accountsRepository.AddCard(creditCard);
         //await loginService.Login(userToken);
-        navigationManager.NavigateTo("register");
+        navigationManager.NavigateTo("operator");
     }
 }

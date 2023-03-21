@@ -13,6 +13,7 @@ public static class Api
     {
         //User
         app.MapPost("/auth", Login);
+        app.MapPost("/user/transfer", Transfer);
         app.MapGet("/user/{userId:int}", GetAccounts);
         app.MapGet("/accounts", GetAllAccounts);
         app.MapGet("/account/{accountId:int}", GetAccountCreditCard);
@@ -71,6 +72,19 @@ public static class Api
 
     #region UserApi
     [Authorize(Roles = "User")]
+    private static async Task<IResult> Transfer(TransferRequest request, IAccountService service)
+    {
+        try
+        {
+            await service.TransferMoney(request);
+            return Results.Ok();
+        }
+        catch (Exception ex)
+        {
+            return Results.Problem(ex.Message);
+        }
+    }
+    [Authorize(Roles = "User")]
     private static async Task<IResult> GetAccounts(int userId, IAccountService service)
     {
         try
@@ -113,7 +127,10 @@ public static class Api
     {
         try
         {
-            return Results.Ok(await data.Login(request));
+            var response = await data.Login(request);
+            if (string.IsNullOrEmpty(response)) return Results.Problem();
+
+            return Results.Ok(response);
         }
         catch (Exception ex)
         {

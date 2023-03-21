@@ -1,39 +1,87 @@
 ﻿@page "/transfer/{accountId:int}/{inner}"
-@inject IUserRepository repository
 
-<BlazoredTypeahead SearchMethod="Search" @bind-Value="SelectedAccount">
-    <SelectedTemplate>
-        @context.Currency
-    </SelectedTemplate>
+@using BankSystem.Shared.Enums
+@inject IUserRepository repository
+@inject NavigationManager nav
+
+<h3>Transaction</h3>
+<BlazoredTypeahead SearchMethod="Search" @bind-Value="SelectedAccount" placeholder="Search Account...">
+    <SelectedTemplate>@context.FirstName @context.LastName (@context.Currency)</SelectedTemplate>
     <ResultTemplate>
-        @context.Amount
-    </ResultTemplate>
+        @context.FirstName @context.LastName 
+        @context.Iban <strong>(@context.Currency)</strong>
+        </ResultTemplate>
 </BlazoredTypeahead>
 
 @if (SelectedAccount != null)
 {
-    <p>Selected Account: @SelectedAccount.Currency</p>
+    <p>Selected Account: @SelectedAccount.Iban</p>
+    <div class="form-group">
+        <label for="amount">Amount:</label>
+        <input type="number" class="form-control" id="amount" @bind-value="MoneyToSend" />
+        @if (MoneyToSend > 0 && MoneyToSend <= FromAccount.Amount && MoneyToSend != null)
+        {
+            <button type="button" class="btn btn-primary" @onclick="goTransaction">Transfer</button>
+        }
+        else if (MoneyToSend != null)
+        {
+            <button type="button" class="btn btn-primary" disabled>Transfer</button>
+            <div class="text-danger">Invalid amount</div>
+        }
+    </div>
 }
 
 @code {
-
     [Parameter] public int accountId { get; set; }
     [Parameter] public string Inner { get; set; }
-
+    public TransferAccounts FromAccount { get; set; }
+    private decimal? MoneyToSend { get; set; } = null;
     private bool isInner;
 
-    private IEnumerable<TransferAccounts> Accounts;
+    private List<TransferAccounts> Accounts;
     private TransferAccounts SelectedAccount;
 
     protected override async Task OnInitializedAsync()
     {
         isInner = Convert.ToBoolean(Inner);
+        var allAccount = await repository.GetAllAccounts();
 
-        Accounts = await repository.GetAllAccounts();
+        FromAccount = allAccount.SingleOrDefault(x => x.AccountId == accountId)!;
+
+        if (isInner)
+        {
+            Accounts = allAccount.Where(x => x.UserID == FromAccount.UserID && x.AccountId != accountId).ToList();
+        }
+        else
+        {
+            Accounts = allAccount.Where(x => x.UserID != FromAccount.UserID).ToList();
+        }
     }
 
     private async Task<IEnumerable<TransferAccounts>> Search(string text)
     {
-        return await Task.FromResult(Accounts.Where(x => x.AccountId.ToString() == text).ToList());
+        return await Task.FromResult(Accounts.Where(x => x.FirstName.ToLower().Contains(text.ToLower()) ||
+                                                            x.LastName.ToLower().Contains(text.ToLower()) ||
+                                                            x.Iban.ToLower().Contains(text.ToLower()) ||
+                                                            x.Currency.ToString().ToLower().Contains(text.ToLower()))
+                                                            .ToList());
+    }
+    private async Task goTransaction()
+    {
+        await repository.TransferMoney(new TransferRequest
+            {
+                FromAccountCurrency = FromAccount.Currency,
+                FromAccountId = FromAccount.AccountId,
+                FromUserId = FromAccount.UserID,
+                MoneyToSend = MoneyToSend!.Value,
+                ToAccountCurrency = SelectedAccount.Currency,
+                ToAccountId = SelectedAccount.AccountId,
+                ToUserId = SelectedAccount.UserID,
+                TransactionType = isInner ?
+                                    TransactionType.InnerTransaction :
+                                    TransactionType.OuterTransaction
+            });
+
+        nav.NavigateTo($"user/{FromAccount.UserID}");
     }
 }

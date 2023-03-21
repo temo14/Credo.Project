@@ -35,4 +35,19 @@ public class AccountRepository : IAccountRepository
     {
         return await _db.LoadData<TransferAccounts, dynamic>("dbo.sp_GetAllAccounts", new { });
     }
+    public Task Transfer(TransactionDto request) =>
+        _db.SaveData(
+            "dbo.spTransaction_Insert",
+            new
+            {
+                request.Currency,
+                request.FromUserId,
+                request.RecieverAccountID,
+                request.ToUserId,
+                request.SenderAccountID,
+                request.MoneyToSend,
+                request.MoneyToRecieve,
+                request.TransactionType,
+                request.TransferFee
+            });
 }

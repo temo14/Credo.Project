@@ -6,6 +6,6 @@ public class UserDto
     public string Username { get; set; }
     public string Password { get; set; }
     public string IdNumber { get; set; }
-    public string Roles { get; set; }
-    public DateTime BirthDate { get; set; }
+    public string? Roles { get; set; }
+    public DateTime BirthDate { get; set; } = DateTime.Now;
 }
