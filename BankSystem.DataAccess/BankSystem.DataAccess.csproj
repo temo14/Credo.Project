@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BankSystem.DB\BankSystem.DB.sqlproj" />
     <ProjectReference Include="..\BankSystem.Shared\BankSystem.Shared.csproj" />
+    <ProjectReference Include="..\DB\DB.sqlproj" />
   </ItemGroup>
 
 </Project>

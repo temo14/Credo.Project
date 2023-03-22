@@ -1,4 +1,6 @@
-﻿namespace BankSystem.Shared.Models.Request;
+﻿using BankSystem.Shared.Enums;
+
+namespace BankSystem.Shared.Models.Request;
 public class UserDto
 {
     public string FirstName { get; set; }

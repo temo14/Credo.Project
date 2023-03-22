@@ -20,12 +20,12 @@ public class AccountRepository : IAccountRepository
 
     public async Task<LoginResponse> Login(LoginRequest request)
     {
-        var result = await _db.LoadData<LoginResponse, dynamic>("dbo.sp_Login", new { request.UserName, request.Password });
+        var result = await _db.LoadData<LoginResponse, dynamic>("sp_Login", new { request.UserName, request.Password });
         return result.FirstOrDefault()!;
     }
     public async Task<IEnumerable<AccountDto>> GetAccounts(int Id)
     {
-        return await _db.LoadData<AccountDto, dynamic>("dbo.sp_GetAccounts", new { userId = Id });
+        return await _db.LoadData<AccountDto, dynamic>("sp_GetUserAccounts", new { userId = Id });
     }
     public async Task<IEnumerable<CreditCardDto>> GetCards(int Id)
     {
@@ -37,7 +37,7 @@ public class AccountRepository : IAccountRepository
     }
     public Task Transfer(TransactionDto request) =>
         _db.SaveData(
-            "dbo.spTransaction_Insert",
+            "dbo.sp_InsertTransaction",
             new
             {
                 request.Currency,

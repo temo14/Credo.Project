@@ -15,21 +15,21 @@ public class OperatorRepository : IOperatorRepository
     }
     public Task InsertUser(UserDto user) =>
         _db.SaveData(
-            "dbo.spUser_Insert",
+            "dbo.sp_InsertUser",
             new { user.FirstName, user.LastName, user.Username, user.IdNumber, user.Roles, user.BirthDate, user.Password });
 
     public Task InsertAccount(AccountDto account) =>
         _db.SaveData(
-            "dbo.spAccount_Insert",
+            "dbo.sp_InsertAccount",
             new { account.Amount, account.Currency, account.Iban, account.UserId });
 
     public Task InsertCreditCard(CreditCardDto creditCard) =>
         _db.SaveData(
-            "dbo.spCreditCard_Insert",
+            "dbo.sp_InsertCreditCard",
             new { creditCard.UserId, creditCard.AccountId, creditCard.CardNumber, creditCard.Cvv, creditCard.Pin });
 
     public Task<IEnumerable<User>> GetUsers() =>
-    _db.LoadData<User, dynamic>("dbo.spUser_GetAll", new { });
+    _db.LoadData<User, dynamic>("dbo.sp_GetAllUser", new { });
 
     public async Task<User?> GetUser(int id)
     {

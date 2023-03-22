@@ -137,7 +137,6 @@ public class AccountRepository : IAccountRepository
         }
         catch (Exception ex)
         {
-            var r = ex.Message;
             //Log exception
             throw;
         }

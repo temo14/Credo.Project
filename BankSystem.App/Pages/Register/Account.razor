@@ -1,8 +1,13 @@
 ﻿@page "/register/account"
+@using BankSystem.Shared.Enums;
 
 @inject IAccountRepository accountsRepository
 @inject NavigationManager navigationManager
 
+@if (ErrorMessage != null)
+{
+    <h3 class="text-danger">@ErrorMessage</h3>
+}
 <h3>Add Account</h3>
 
 <EditForm Model="account" OnValidSubmit="CreateUser">
@@ -27,7 +32,7 @@
     <div class="form-group">
         <label>Iban:</label>
         <div>
-            <InputNumber class="form-control" @bind-Value="@account.Iban" />
+            <InputText class="form-control" @bind-Value="@account.Iban" />
             <ValidationMessage For="@(() => account.Iban)" />
         </div>
     </div>   
@@ -35,7 +40,13 @@
     <div class="form-group">
         <label>Currency:</label>
         <div>
-            <InputNumber class="form-control" @bind-Value="@account.Currency" />
+            <InputSelect class="form-control" @bind-Value="@account.Currency">
+            <option value="" selected disabled hidden>Choose here</option>
+                @foreach (var currency in Enum.GetValues(typeof(Currency)))
+                 {
+                     <option value="@(currency)">@currency</option>
+                 }
+            </InputSelect>
             <ValidationMessage For="@(() => account.Currency)" />
         </div>
     </div>
@@ -46,11 +57,21 @@
 
 @code {
     private AccountDto account = new AccountDto();
+    public string ErrorMessage { get; set; }
 
     private async Task CreateUser()
     {
-        await accountsRepository.AddAccount(account);
-        //await loginService.Login(userToken);
-        navigationManager.NavigateTo("operator");
+        try
+        {
+            await accountsRepository.AddAccount(account);
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+        if (ErrorMessage == null)
+        {
+            navigationManager.NavigateTo("operator");
+        }
     }
 }
