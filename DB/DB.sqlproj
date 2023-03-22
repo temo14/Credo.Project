@@ -3,15 +3,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>BankSystem.DB</Name>
+    <Name>DB</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{101f83ce-a5f7-4dcb-94e3-5110dbdfe308}</ProjectGuid>
+    <ProjectGuid>{2b78c117-3e1a-4ba9-a0a7-61b0df2c0fa1}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
-    <RootPath />
-    <RootNamespace>BankSystem.DB</RootNamespace>
-    <AssemblyName>BankSystem.DB</AssemblyName>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>DB</RootNamespace>
+    <AssemblyName>DB</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
@@ -47,6 +48,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
     <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
     <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
   </PropertyGroup>
@@ -55,31 +57,29 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="dbo" />
-    <Folder Include="dbo\Tables" />
     <Folder Include="dbo\StoredProcedures" />
-    <Folder Include="dbo\StoredProcedures\Operator" />
-    <Folder Include="dbo\StoredProcedures\User" />
+    <Folder Include="dbo\Tables" />
   </ItemGroup>
   <ItemGroup>
+    <Build Include="dbo\Tables\Accounts.sql" />
     <Build Include="dbo\Tables\Users.sql" />
     <Build Include="dbo\Tables\Transactions.sql" />
     <Build Include="dbo\Tables\CreditCards.sql" />
-    <Build Include="dbo\Tables\Accounts.sql" />
-    <Build Include="dbo\StoredProcedures\Operator\spUser_Insert.sql" />
-    <Build Include="dbo\StoredProcedures\Operator\spUser_GetAll.sql" />
-    <Build Include="dbo\StoredProcedures\Operator\spUser_Get.sql" />
-    <Build Include="dbo\StoredProcedures\Operator\spAccount_Insert.sql" />
-    <Build Include="dbo\StoredProcedures\Operator\spCreditCard_Insert.sql" />
-    <Build Include="dbo\StoredProcedures\sp_Login.sql" />
-    <Build Include="dbo\StoredProcedures\User\sp_GetAccounts.sql" />
-    <Build Include="dbo\StoredProcedures\User\sp_GetCreditCards.sql" />
-    <Build Include="dbo\StoredProcedures\User\sp_GetAllAccounts.sql" />
-    <Build Include="dbo\StoredProcedures\User\spTransaction_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\sp_InsertAccount.sql" />
+    <Build Include="dbo\StoredProcedures\sp_InsertCreditCard.sql" />
+    <Build Include="dbo\StoredProcedures\sp_InsertUser.sql" />
+    <Build Include="dbo\StoredProcedures\sp_InsertTransaction.sql" />
+    <Build Include="dbo\StoredProcedures\sp_GetUser.sql" />
+    <Build Include="dbo\StoredProcedures\sp_GetAllUser.sql" />
+    <Build Include="dbo\StoredProcedures\sp_GetAllAccounts.sql" />
+    <Build Include="dbo\StoredProcedures\sp_GetUserAccounts.sql" />
+    <Build Include="dbo\StoredProcedures\sp_GetCreditCards.sql" />
+    <Build Include="dbo\StoredProcedures\sp.Login.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BankSystem.DB.publish.xml" />
+    <None Include="DB.publish.xml" />
   </ItemGroup>
 </Project>

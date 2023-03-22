@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spCreditCard_Insert]
+﻿CREATE PROCEDURE [dbo].[sp_InsertCreditCard]
 	@UserID int,
 	@AccountId int,
 	@CardNumber nvarchar(16),

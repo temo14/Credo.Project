@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spTransaction_Insert]
+﻿CREATE PROCEDURE [dbo].[sp_InsertTransaction]
 	@FromUserId int,
 	@ToUserId int,
 	@SenderAccountID int,

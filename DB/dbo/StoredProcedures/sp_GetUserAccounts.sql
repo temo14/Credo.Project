@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[sp_GetAccounts]
+﻿CREATE PROCEDURE [dbo].[sp_GetUserAccounts]
 	@userId int = null
 AS
 begin
