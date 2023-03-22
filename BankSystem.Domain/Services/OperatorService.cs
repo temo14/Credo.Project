@@ -1,4 +1,5 @@
 ﻿using BankSystem.DataAccess.Repositories.Contracts;
+using BankSystem.Domain.Configurations;
 using BankSystem.Domain.Services.Contracts;
 using BankSystem.Shared.Models.Request;
 
@@ -18,6 +19,7 @@ public class OperatorService : IOperatorService
     }
     public Task AddAccount(AccountDto acc)
     {
+        if (IbanValidation.IsValid(acc.Iban)) throw new InvalidOperationException("Invalid Iban");
         return _repository.InsertAccount(acc);
     }
     public Task AddCreditCard(CreditCardDto card)
