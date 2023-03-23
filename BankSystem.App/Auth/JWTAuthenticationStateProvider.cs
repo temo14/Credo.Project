@@ -19,9 +19,7 @@ public class JWTAuthenticationStateProvider : AuthenticationStateProvider, ILogi
 
     public override Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        var token = LocalStorage.GetToken != null
-                                    ? LocalStorage.GetToken()
-                                    : null;
+        var token = LocalStorage.Token;
 
         if (string.IsNullOrEmpty(token))
         {
@@ -40,14 +38,14 @@ public class JWTAuthenticationStateProvider : AuthenticationStateProvider, ILogi
 
     public async Task Login(string userToken)
     {
-        LocalStorage.GetToken = () => userToken;
+        LocalStorage.Token = userToken;
         var authState = BuildAuthenticationState(userToken);
         NotifyAuthenticationStateChanged(Task.FromResult(authState));
     }
 
     public async Task Logout()
     {
-        LocalStorage.GetToken = () => null;
+        LocalStorage.Token = null;
         _httpClient.DefaultRequestHeaders.Authorization = null;
         NotifyAuthenticationStateChanged(Task.FromResult(_anonymous));
     }

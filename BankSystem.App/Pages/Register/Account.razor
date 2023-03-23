@@ -3,11 +3,8 @@
 
 @inject IAccountRepository accountsRepository
 @inject NavigationManager navigationManager
+@inject IJSRuntime JS
 
-@if (ErrorMessage != null)
-{
-    <h3 class="text-danger">@ErrorMessage</h3>
-}
 <h3>Add Account</h3>
 
 <EditForm Model="account" OnValidSubmit="CreateUser">
@@ -68,6 +65,7 @@
         catch (Exception ex)
         {
             ErrorMessage = ex.Message;
+            await JS.InvokeAsync<string>("alert", $"Invalid Request, {ErrorMessage}");
         }
         if (ErrorMessage == null)
         {

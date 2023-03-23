@@ -1,10 +1,11 @@
 ﻿@page "/login"
 @using BankSystem.Shared.Enums;
 @using System.Security.Claims;
-
+@inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IAccountRepository accountsRepository
 @inject NavigationManager navigationManager
 @inject ILoginService loginService
+@inject IJSRuntime JS
 
 <h3>Login</h3>
 
@@ -32,32 +33,39 @@
 
 @code {
     private LoginRequest userInfo = new LoginRequest();
-    private int userId;
 
     private async Task Signin()
     {
-        var userToken = await accountsRepository.Login(userInfo);
-        await loginService.Login(userToken);
+        string userToken = string.Empty;
+        try
+        {
+            userToken = await accountsRepository.Login(userInfo);
+        }
+        catch (Exception)
+        {
+            await JS.InvokeAsync<string>("alert", "Username or Password is incorrect.");
+        }
 
+        if (!string.IsNullOrEmpty(userToken))
+        {
+            await loginService.Login(userToken);
+            await Redirect();
+        }
         //await InitializeUserAsync();
     }
+    private async Task Redirect()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var role = authState.User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.Role)!.Value;
+        var Id = authState.User.Claims.SingleOrDefault(x => x.Type == "Id")!.Value;
 
-    //private async Task InitializeUserAsync()
-    //{
-    //    var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-    //    var Id = authState.User.Claims.SingleOrDefault(x => x.Type == "Id");
-    //    var role = authState.User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.Role);
-
-    //    userId = Convert.ToInt32(Id!.Value ?? throw new ArgumentNullException());
-
-    //    if (role.ToString() == Roles.User.ToString())
-    //    {
-    //        navigationManager.NavigateTo($"user/{userId}");
-    //    }
-    //    else
-    //    {
-    //        navigationManager.NavigateTo($"operator");
-    //    }
-    //}
-
+        if (role == Roles.User.ToString())
+        {
+            navigationManager.NavigateTo($"user/{Id}");
+        }
+        else
+        {
+            navigationManager.NavigateTo($"operator");
+        }
+    }
 }

@@ -16,6 +16,8 @@ else
 
     @if (accountsCount > 0)
     {
+        <h3 class="mb-5">Credit Cards</h3>
+
         <table class="table">
             <thead>
                 <tr>
@@ -40,7 +42,7 @@ else
     }
     else
     {
-        <h3 class="text-danger">There are no CreditCards to show</h3>
+        <h3 class="text-danger">There are no Credit Cards to show</h3>
     }
 
     <button class="btn btn-primary" @onclick="@(() => nav.NavigateTo($"/transfer/{accountId}/true"))">Inner Transfer</button>
@@ -56,6 +58,13 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        creditCards = await repository.GetCreditCards(accountId);
+        try
+        {
+            creditCards = await repository.GetCreditCards(accountId);
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
     }
 }

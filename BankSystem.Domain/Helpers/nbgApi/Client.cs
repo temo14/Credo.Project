@@ -1,8 +1,8 @@
-﻿using BankSystem.Domain.nbgApi.Models;
+﻿using BankSystem.Domain.Helpers.nbgApi.Models;
 using System.Net;
 using System.Text.Json;
 
-namespace BankSystem.Domain.nbgApi;
+namespace BankSystem.Domain.Helpers.nbgApi;
 public static class Client
 {
     private static readonly HttpClient _httpClient = new HttpClient();

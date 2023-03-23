@@ -11,7 +11,6 @@ public static class Api
 {
     public static void ConfigureApi(this WebApplication app)
     {
-        //User
         app.MapPost("/auth", Login);
         app.MapPost("/user/transfer", Transfer);
         app.MapGet("/user/{userId:int}", GetAccounts);
@@ -20,10 +19,6 @@ public static class Api
         app.MapPost("/users", InsertUser);
         app.MapPost("/account", InsertAccount);
         app.MapPost("/creditcard", InsertCreditCard);
-        //app.MapPut("/Users", UpdateUser);
-        //app.MapDelete("/Users", DeleteUser);
-        //Account
-
     }
     #region OperatorApi
 

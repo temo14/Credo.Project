@@ -27,15 +27,4 @@ public class OperatorRepository : IOperatorRepository
         _db.SaveData(
             "dbo.sp_InsertCreditCard",
             new { creditCard.UserId, creditCard.AccountId, creditCard.CardNumber, creditCard.Cvv, creditCard.Pin });
-
-    public Task<IEnumerable<User>> GetUsers() =>
-    _db.LoadData<User, dynamic>("dbo.sp_GetAllUser", new { });
-
-    public async Task<User?> GetUser(int id)
-    {
-        var results = await _db.LoadData<User, dynamic>(
-            "dbo.spUser_Get",
-            new { Id = id });
-        return results.FirstOrDefault();
-    }
 }

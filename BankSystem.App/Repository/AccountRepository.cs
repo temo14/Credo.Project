@@ -19,7 +19,7 @@ public class AccountRepository : IAccountRepository
         this.httpClient = httpClient;
     }
 
-    public async Task<string?> Login(LoginRequest request)
+    public async Task<string> Login(LoginRequest request)
     {
         try
         {

@@ -2,5 +2,5 @@
 
 public static class LocalStorage
 {
-    public static Func<string> GetToken;
+    public static string Token;
 }

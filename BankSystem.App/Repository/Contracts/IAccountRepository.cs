@@ -8,5 +8,5 @@ public interface IAccountRepository
     Task AddAccount(AccountDto request);
     Task AddCard(CreditCardDto request);
     Task AddUser(UserDto request);
-    Task<string?> Login(LoginRequest request);
+    Task<string> Login(LoginRequest request);
 }

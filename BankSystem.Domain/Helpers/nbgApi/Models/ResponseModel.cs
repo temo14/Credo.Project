@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BankSystem.Domain.nbgApi.Models;
+namespace BankSystem.Domain.Helpers.nbgApi.Models;
 public class ResponseModel
 {
     public DateTime date { get; set; }

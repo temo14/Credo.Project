@@ -1,6 +1,6 @@
 ﻿using BankSystem.DataAccess.Repositories.Contracts;
 using BankSystem.Domain.Configurations;
-using BankSystem.Domain.nbgApi;
+using BankSystem.Domain.Helpers.nbgApi;
 using BankSystem.Domain.Services.Contracts;
 using BankSystem.Shared.Enums;
 using BankSystem.Shared.Models;
