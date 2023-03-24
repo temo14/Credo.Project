@@ -20,8 +20,8 @@ begin
 			set Amount += @MoneyToRecieve
 			where Id = @RecieverAccountID
 		
-			insert into Transactions(UserID, RecieverUserID, TransferFee, TransferAmount, Currency, TransactionType)
-			values (@FromUserId, @ToUserId, @TransferFee, @MoneyToSend, @Currency, @TransactionType)
+			insert into Transactions(UserID, SenderAccountID, RecieverAccountID, TransferFee, TransferAmount, Currency, TransactionType)
+			values (@FromUserId, @SenderAccountID, @RecieverAccountID, @TransferFee, @MoneyToSend, @Currency, @TransactionType)
 		commit tran
 	end try
 	begin catch

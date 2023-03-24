@@ -12,3 +12,6 @@
 	CONSTRAINT FK_CreditCard_Users FOREIGN KEY (UserID) REFERENCES [dbo].[Users] (Id)
 	CONSTRAINT FK_CreditCard_Acount FOREIGN KEY (AccountID) REFERENCES [dbo].[Accounts] (Id)
 )
+GO
+
+CREATE UNIQUE INDEX [IX_CreditCards_Column] ON [dbo].[CreditCards] (CardNumber)

@@ -2,7 +2,8 @@
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
 	UserID int not null,
-	RecieverUserID int not null,
+	SenderAccountID int not null,
+	RecieverAccountID int not null,
 	TransferFee decimal(18, 2) not null,
 	TransferAmount decimal(18, 2) not null,
 	Currency nvarchar(3) not null,

@@ -11,3 +11,6 @@
 	CreateDate datetime not null default(GetDate()),
 	IsDeleted bit not null default(0)
 )
+GO
+
+CREATE UNIQUE INDEX [IX_Users_Column] ON [dbo].[Users] (IdNumber)

@@ -9,3 +9,6 @@
 	IsDeleted bit not null default(0),
 	CONSTRAINT FK_Accounts_Users FOREIGN KEY (UserID) REFERENCES [dbo].[Users] (Id)
 )
+GO
+
+CREATE UNIQUE INDEX [IX_Accounts_Iban] ON [dbo].[Accounts] (Iban)
