@@ -3,7 +3,7 @@ using BankSystem.Shared.Models.Response;
 
 namespace BankSystem.App.Repository.Contracts;
 
-public interface IUserRepository
+public interface IUserService
 {
     public Task<IEnumerable<AccountDto>> GetAccounts(int userId);
     Task<IEnumerable<BankSystem.Shared.Models.Response.TransferAccounts>> GetAllAccounts();

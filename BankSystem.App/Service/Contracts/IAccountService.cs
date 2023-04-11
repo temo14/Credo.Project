@@ -3,7 +3,7 @@ using BankSystem.Shared.Models.Request;
 
 namespace BankSystem.App.Repository.Contracts;
 
-public interface IAccountRepository
+public interface IAccountService
 {
     Task AddAccount(AccountDto request);
     Task AddCard(CreditCardDto request);

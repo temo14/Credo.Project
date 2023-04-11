@@ -10,11 +10,11 @@ using System.Text;
 
 namespace BankSystem.App.Repository;
 
-public class AccountRepository : IAccountRepository
+public class AccountService : IAccountService
 {
     private readonly HttpClient httpClient;
 
-    public AccountRepository(HttpClient httpClient)
+    public AccountService(HttpClient httpClient)
     {
         this.httpClient = httpClient;
     }

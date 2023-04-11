@@ -14,16 +14,17 @@ builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("http
 
 // use same instance for AuthenticationStateProvider and ILoginService
 builder.Services.AddScoped<JWTAuthenticationStateProvider>();
+
 builder.Services.AddScoped<AuthenticationStateProvider, JWTAuthenticationStateProvider>(
     provider => provider.GetRequiredService<JWTAuthenticationStateProvider>()
-    );
+);
 
 builder.Services.AddScoped<ILoginService, JWTAuthenticationStateProvider>(
     provider => provider.GetRequiredService<JWTAuthenticationStateProvider>()
-    );
+);
 
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 
 builder.Services.AddAuthorizationCore();

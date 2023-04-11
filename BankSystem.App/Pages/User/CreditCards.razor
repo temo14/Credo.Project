@@ -1,5 +1,5 @@
 ﻿@page "/account/{accountId:int}"
-@inject IUserRepository repository
+@inject IUserService repository
 @inject NavigationManager nav
 
 @if (creditCards == null && ErrorMessage == null)

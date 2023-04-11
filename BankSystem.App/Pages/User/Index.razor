@@ -1,6 +1,6 @@
 ﻿@page "/user/{Id:int}"
 
-@inject IUserRepository _repository
+@inject IUserService _repository
 @inject NavigationManager nav
 
 @if (Accounts == null && ErrorMessage == null)

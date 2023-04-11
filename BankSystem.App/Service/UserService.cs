@@ -10,11 +10,11 @@ using System.Text;
 
 namespace BankSystem.App.Repository;
 
-public class UserRepository : IUserRepository
+public class UserService : IUserService
 {
     private readonly HttpClient httpClient;
 
-    public UserRepository(HttpClient httpClient)
+    public UserService(HttpClient httpClient)
     {
         this.httpClient = httpClient;
     }
