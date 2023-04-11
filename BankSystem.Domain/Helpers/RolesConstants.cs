@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BankSystem.Domain.Configurations;
-public static class Constants
+public static class RolesConstants
 {
     public const string UserRole = "User";
     public const string OperatorRole = "Operator";
